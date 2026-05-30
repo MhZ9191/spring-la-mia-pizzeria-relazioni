@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header th:replace="fragments/fragment :: header" />
+    <main>
+      <section>
+        <div>
+          <table>
+            <thead>
+              <tr>
+                <th>NOME</th>
+                <th>DESCRIZIONE</th>
+                <th>PRICE</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="pizza : ${pizzas}">
+                <td th:text="${pizza.getName().replace('-',' ')}" />
+                <td th:text="${pizza.getDescription()}" />
+                <td th:text="|${pizza.getPrice()}$|" />
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
