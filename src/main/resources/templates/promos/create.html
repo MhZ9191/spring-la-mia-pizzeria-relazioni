@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header th:replace="fragments/fragment :: header" />
+    <main>
+      <section>
+        <div>
+          <form
+            th:action="${edit} ? @{/promo/{id}/edit(id=${promo.id})} : @{/promo/create}"
+            th:object="${promo}"
+            method="post"
+          >
+            <input type="hidden" th:field="*{pizza}" />
+
+            <label for="promo-title">Title</label>
+            <input
+              id="promo-title"
+              type="text"
+              th:field="*{title}"
+              th:errorClass="invalid"
+            />
+            <div th:if="${#fields.hasErrors('title')}">
+              <ul>
+                <li
+                  th:each="error : ${#fields.hasErrors('title')}"
+                  th:text="${error}"
+                />
+              </ul>
+            </div>
+            <label for="promo-start">START DATE</label>
+            <input
+              id="promo-start"
+              type="date"
+              th:field="*{start}"
+              th:errorClass="invalid"
+            />
+            <div th:if="${#fields.hasErrors('start')}">
+              <ul>
+                <li
+                  th:each="error : ${#fields.hasErrors('start')}"
+                  th:text="${error}"
+                />
+              </ul>
+            </div>
+
+            <label for="promo-end">END DATE</label>
+            <input
+              id="promo-end"
+              type="date"
+              th:field="*{end}"
+              th:errorClass="invalid"
+            />
+            <div th:if="${#fields.hasErrors('end')}">
+              <ul>
+                <li
+                  th:each="error : ${#fields.hasErrors('end')}"
+                  th:text="${error}"
+                />
+              </ul>
+            </div>
+
+            <input type="submit" />
+          </form>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

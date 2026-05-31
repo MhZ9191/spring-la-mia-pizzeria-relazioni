@@ -18,6 +18,7 @@
                 <th>PRICE</th>
                 <th></th>
                 <th></th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -30,6 +31,12 @@
                 </td>
                 <td th:text="${pizza.getDescription()}" />
                 <td th:text="|${pizza.getPrice()}$|" />
+                <td>
+                  <a
+                    th:href="@{/{id}/promo(id=${pizza.id})}"
+                    th:text="|ADD PROMO|"
+                  />
+                </td>
                 <td>
                   <a th:href="@{/{id}/edit(id=${pizza.id})}" th:text="EDIT" />
                 </td>

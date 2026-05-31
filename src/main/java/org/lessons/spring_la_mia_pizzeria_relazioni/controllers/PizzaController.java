@@ -1,7 +1,9 @@
 package org.lessons.spring_la_mia_pizzeria_relazioni.controllers;
 
 import org.lessons.spring_la_mia_pizzeria_relazioni.entities.Pizza;
+import org.lessons.spring_la_mia_pizzeria_relazioni.entities.Promo;
 import org.lessons.spring_la_mia_pizzeria_relazioni.repo.pizzaRepo;
+import org.lessons.spring_la_mia_pizzeria_relazioni.repo.promoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
@@ -26,6 +28,9 @@ public class PizzaController {
     
     @Autowired
     private pizzaRepo repo;
+
+    @Autowired
+    private promoRepo promorep;
 
     @GetMapping
     public String index(Model model) {
@@ -77,10 +82,26 @@ public class PizzaController {
     @GetMapping("/{id}/delete")
     public String delete(@PathVariable Integer id) {
 
-        repo.delete(repo.findById(id).get());
+        Pizza currentPizza = repo.findById(id).get();
+
+        for(Promo promo : currentPizza.getPromos()){
+            promorep.delete(promo);
+        }
+
+        repo.delete(currentPizza);
 
         return "redirect:/";
     }
+    
+    @GetMapping("/{id}/promo")
+    public String createPromo(@PathVariable Integer id, Model model) {
+        Promo promo = new Promo();
+        Pizza currentPizza = repo.findById(id).get();
+        promo.setPizza(currentPizza);
+        model.addAttribute("promo",promo);
+        return "promos/create";
+    }
+    
     
 
 }

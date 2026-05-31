@@ -8,8 +8,46 @@
   <body>
     <header th:replace="fragments/fragment :: header" />
     <main>
-      <h2>DETAIL</h2>
-      <h3 th:text="${pizza.name}" />
+      <section>
+        <div>
+          <h2 th:text="|DETAIL ${pizza.name}|" />
+          <div th:if="${pizza.promos.size()>0}">
+            <table>
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Start date</th>
+                  <th>End date</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="promo : ${pizza.promos}">
+                  <td th:text="${promo.getTitle()}" />
+                  <td th:text="${promo.getStart}" />
+                  <td th:text="${promo.getEnd()}" />
+                  <td>
+                    <a
+                      th:text="EDIT"
+                      th:href="@{/promo/{id}/edit(id=${promo.id})}"
+                    />
+                  </td>
+                  <td>
+                    <a
+                      th:text="DELETE"
+                      th:href="@{/promo/{id}/delete(id=${promo.id})}"
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div th:unless="${pizza.promos.size()>0}">
+            <span>Non ci sono promozioni</span>
+          </div>
+        </div>
+      </section>
     </main>
   </body>
 </html>
