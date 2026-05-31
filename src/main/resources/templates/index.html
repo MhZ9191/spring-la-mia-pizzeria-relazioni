@@ -16,13 +16,29 @@
                 <th>NOME</th>
                 <th>DESCRIZIONE</th>
                 <th>PRICE</th>
+                <th></th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
               <tr th:each="pizza : ${pizzas}">
-                <td th:text="${pizza.getName().replace('-',' ')}" />
+                <td>
+                  <a
+                    th:text="${pizza.getName().replace('-',' ')}"
+                    th:href="@{/{id}(id=${pizza.id})}"
+                  />
+                </td>
                 <td th:text="${pizza.getDescription()}" />
                 <td th:text="|${pizza.getPrice()}$|" />
+                <td>
+                  <a th:href="@{/{id}/edit(id=${pizza.id})}" th:text="EDIT" />
+                </td>
+                <td>
+                  <a
+                    th:href="@{/{id}/delete(id=${pizza.id})}"
+                    th:text="DELETE"
+                  />
+                </td>
               </tr>
             </tbody>
           </table>
