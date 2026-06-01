@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header th:replace="fragments/fragment :: header" />
+    <main>
+      <section>
+        <div>
+          <div>
+            <a href="ingredient/create">ADD INGREDIENT</a>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>NAME</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="ingredient : ${ingredients}">
+                <td th:text="${ingredient.name}" />
+                <td>
+                  <a
+                    th:text="EDIT"
+                    th:href="@{/ingredient/{id}/edit(id=${ingredient.id})}"
+                  />
+                </td>
+                <td>
+                  <form
+                    th:action="@{/ingredient/{id}/delete(id=${ingredient.id})}"
+                    th:object="${ingredient}"
+                    method="post"
+                  >
+                    <input type="submit" />
+                  </form>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

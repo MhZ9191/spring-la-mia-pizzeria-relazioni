@@ -15,6 +15,18 @@
             th:object="${pizza}"
             method="post"
           >
+            <div th:each="ingredient : ${ingredients}">
+              <label
+                th:for="|ing-${ingredient.id}|"
+                th:text="${ingredient.name}"
+              ></label>
+              <input
+                type="checkbox"
+                th:id="|ing-${ingredient.id}|"
+                th:field="${pizza.ingredients}"
+                th:value="${ingredient.id}"
+              />
+            </div>
             <label for="pizza-name">PIZZA NAME</label>
             <input
               id="pizza-name"

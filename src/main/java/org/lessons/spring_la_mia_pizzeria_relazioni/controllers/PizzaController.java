@@ -2,6 +2,7 @@ package org.lessons.spring_la_mia_pizzeria_relazioni.controllers;
 
 import org.lessons.spring_la_mia_pizzeria_relazioni.entities.Pizza;
 import org.lessons.spring_la_mia_pizzeria_relazioni.entities.Promo;
+import org.lessons.spring_la_mia_pizzeria_relazioni.repo.ingredientRepo;
 import org.lessons.spring_la_mia_pizzeria_relazioni.repo.pizzaRepo;
 import org.lessons.spring_la_mia_pizzeria_relazioni.repo.promoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,9 @@ public class PizzaController {
     @Autowired
     private promoRepo promorep;
 
+    @Autowired
+    private ingredientRepo ingRepo;
+
     @GetMapping
     public String index(Model model) {
         model.addAttribute("pizzas",repo.findAll());
@@ -47,6 +51,7 @@ public class PizzaController {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("pizza",new Pizza());
+        model.addAttribute("ingredients",ingRepo.findAll());
         return "pizza/create";
     }
     

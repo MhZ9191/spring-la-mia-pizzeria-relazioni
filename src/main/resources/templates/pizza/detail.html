@@ -6,7 +6,7 @@
     <title>Document</title>
   </head>
   <body>
-    <header th:replace="fragments/fragment :: header" />
+    <header th:replace="fragments/fragment :: header"></header>
     <main>
       <section>
         <div>
@@ -45,6 +45,14 @@
           </div>
           <div th:unless="${pizza.promos.size()>0}">
             <span>Non ci sono promozioni</span>
+          </div>
+          <div>
+            <ul>
+              <li
+                th:each="ingredient : ${pizza.getIngredients()}"
+                th:text="${ingredient.name}"
+              ></li>
+            </ul>
           </div>
         </div>
       </section>

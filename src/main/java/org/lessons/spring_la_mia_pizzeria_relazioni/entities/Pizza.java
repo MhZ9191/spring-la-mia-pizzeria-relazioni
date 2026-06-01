@@ -2,11 +2,15 @@ package org.lessons.spring_la_mia_pizzeria_relazioni.entities;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Locale.Category;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMin;
@@ -24,6 +28,14 @@ public class Pizza {
     @OneToMany(mappedBy = "pizza")
     List<Promo> promos;
 
+    @ManyToMany
+    @JoinTable(
+        name = "ingredient_pizza",
+        joinColumns = @JoinColumn( name = "pizza_id" ),
+        inverseJoinColumns = @JoinColumn( name = "ingredient_id" )
+    )
+    private List<Ingredient> ingredients;
+
     @NotBlank(message="Campo obbligatorio")
     private String name;
 
@@ -37,6 +49,14 @@ public class Pizza {
     private BigDecimal price;
 
     //GETTERS
+
+    public List<Ingredient> getIngredients(){
+        return this.ingredients;
+    }
+
+    public void setIngredients(List<Ingredient> ingredients){
+        this.ingredients=ingredients;
+    }
 
     public List<Promo> getPromos(){
         return this.promos;
